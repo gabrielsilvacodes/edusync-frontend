@@ -7,7 +7,7 @@ interface PrivateRouteProps {
 }
 
 // Rota protegida: redireciona se não estiver autenticado
-export function PrivateRoute({ children }: PrivateRouteProps) {
+export default function PrivateRoute({ children }: PrivateRouteProps) {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 }

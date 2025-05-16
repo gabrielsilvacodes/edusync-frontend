@@ -1,14 +1,7 @@
-import { createContext, useState } from "react";
+import { useState } from "react";
 import type { PropsWithChildren } from "react";
-
-export interface AuthContextType {
-  token: string | null;
-  isAuthenticated: boolean;
-  login: (token: string) => void;
-  logout: () => void;
-}
-
-export const AuthContext = createContext<AuthContextType | null>(null);
+import { AuthContext } from "./AuthContext";
+import type { AuthContextType } from "./AuthContext";
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [token, setToken] = useState<string | null>(

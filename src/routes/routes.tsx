@@ -2,7 +2,7 @@ import type { ReactElement } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DashboardPage from "../pages/DashboardPage";
 import LoginPage from "../pages/LoginPage";
-import { PrivateRoute } from "./PrivateRoute";
+import PrivateRoute from "./PrivateRoute";
 
 interface AppRoute {
   path: string;
@@ -10,7 +10,10 @@ interface AppRoute {
 }
 
 const routes: AppRoute[] = [
-  { path: "/login", element: <LoginPage /> },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
   {
     path: "/dashboard",
     element: (
@@ -21,7 +24,7 @@ const routes: AppRoute[] = [
   },
 ];
 
-export function AppRoutes() {
+export function AppRoutes(): ReactElement {
   return (
     <BrowserRouter>
       <Routes>

@@ -10,7 +10,6 @@ export default function LoginPage() {
     password: "",
   });
   const [error, setError] = useState<string | null>(null);
-
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -23,6 +22,7 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/token/`,
@@ -38,22 +38,20 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.detail || "E-mail ou senha incorretos.");
+        setError(data?.detail || "E-mail ou senha incorretos.");
         return;
       }
 
       login(data.access);
       navigate("/dashboard");
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.error("Erro ao fazer login:", error.message);
-        setError("Erro inesperado. Tente novamente.");
-      }
+      console.error(error);
+      setError("Erro inesperado. Verifique sua conexão.");
     }
   };
 
   return (
-    <div>
+    <main>
       <h1>Login</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <form onSubmit={handleSubmit}>
@@ -85,6 +83,6 @@ export default function LoginPage() {
 
         <button type="submit">Entrar</button>
       </form>
-    </div>
+    </main>
   );
 }
