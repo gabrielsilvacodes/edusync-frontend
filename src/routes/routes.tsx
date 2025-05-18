@@ -1,37 +1,70 @@
-import type { ReactElement } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import DashboardPage from "../pages/DashboardPage";
-import LoginPage from "../pages/LoginPage";
-import PrivateRoute from "./PrivateRoute";
+import { Suspense, lazy } from "react";
+import { Route, Routes } from "react-router-dom";
+import { useAuth } from "../context/AuthProvider";
 
-interface AppRoute {
-  path: string;
-  element: ReactElement;
+// Lazy Loading das páginas
+const LoginPage = lazy(() => import("../pages/LoginPage"));
+const DashboardPage = lazy(() => import("../pages/DashboardPage"));
+const AlunoFormPage = lazy(() => import("../pages/AlunoFormPage"));
+const AlunoDetailPage = lazy(() => import("../pages/AlunoDetailPage"));
+
+
+
+function PrivateRoute({ children }: { children: JSX.Element }) {
+  const { isAuthenticated } = useAuth();
+
+  if (isAuthenticated === null) {
+    // Ainda validando, bloqueia tudo!
+    return <div>Verificando sessão...</div>;
+  }
+
+  if (isAuthenticated === false) {
+    // Sessão inválida, redireciona sem renderizar nada
+    window.location.href = "/login";
+    return null;
+  }
+
+  return children;
 }
 
-const routes: AppRoute[] = [
-  {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
-    path: "/dashboard",
-    element: (
-      <PrivateRoute>
-        <DashboardPage />
-      </PrivateRoute>
-    ),
-  },
-];
-
-export function AppRoutes(): ReactElement {
+export function AppRoutes() {
   return (
-    <BrowserRouter>
+    <Suspense fallback={<p>Carregando...</p>}>
       <Routes>
-        {routes.map(({ path, element }) => (
-          <Route key={path} path={path} element={element} />
-        ))}
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <DashboardPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/alunos/new"
+          element={
+            <PrivateRoute>
+              <AlunoFormPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/alunos/:id"
+          element={
+            <PrivateRoute>
+              <AlunoDetailPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/alunos/:id/edit"
+          element={
+            <PrivateRoute>
+              <AlunoFormPage />
+            </PrivateRoute>
+          }
+        />
       </Routes>
-    </BrowserRouter>
+    </Suspense>
   );
 }

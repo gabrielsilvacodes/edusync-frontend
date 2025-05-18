@@ -1,33 +1,51 @@
-import { useState } from "react";
-import type { PropsWithChildren } from "react";
-import { AuthContext } from "./AuthContext";
+import { createContext, useContext, useEffect, useState } from "react";
 import type { AuthContextType } from "./AuthContext";
+import api from "../services/api";
 
-export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem("token")
-  );
+const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
-  const isAuthenticated = !!token;
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
-  const login = (newToken: string) => {
-    localStorage.setItem("token", newToken);
-    setToken(newToken);
-  };
+const login = async (username: string, password: string) => {
+  const { data } = await api.post("/api/token/", { username, password });
+  localStorage.setItem("access_token", data.access);
+  localStorage.setItem("refresh_token", data.refresh);
+  api.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
+  setIsAuthenticated(true);
+};
 
   const logout = () => {
-    localStorage.removeItem("token");
-    setToken(null);
+    setIsAuthenticated(false);
+    window.location.href = "/login";
   };
 
-  const contextValue: AuthContextType = {
-    token,
-    isAuthenticated,
-    login,
-    logout,
-  };
+  useEffect(() => {
+    const validateSession = async () => {
+      try {
+        await api.get("/api/v1/alunos/");
+        setIsAuthenticated(true);
+      } catch (error: any) {
+        setIsAuthenticated(false);
+        // Redireciona uma única vez, evita múltiplas redireções
+        if (window.location.pathname !== "/login") {
+          window.location.href = "/login";
+        }
+      }
+    };
+  
+    validateSession();
+  }, []);
+
+  if (isAuthenticated === null) {
+    return <div>Verificando sessão...</div>;
+  }
 
   return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);
