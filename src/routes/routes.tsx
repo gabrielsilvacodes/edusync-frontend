@@ -5,20 +5,32 @@ import { useAuth } from "../context/AuthProvider";
 // Lazy Loading das páginas
 const LoginPage = lazy(() => import("../pages/LoginPage"));
 const DashboardPage = lazy(() => import("../pages/DashboardPage"));
-const AlunoFormPage = lazy(() => import("../pages/AlunoFormPage"));
-const AlunoDetailPage = lazy(() => import("../pages/AlunoDetailPage"));
-const ProfessorFormPage = lazy(() => import("../pages/ProfessorFormPage"));
-const ProfessorDetailPage = lazy(() => import("../pages/ProfessorDetailPage"));
-const MateriaFormPage = lazy(() => import("../pages/MateriaFormPage"));
-const MateriaDetailPage = lazy(() => import("../pages/MateriaDetailPage"));
-const TurmaFormPage = lazy(() => import("../pages/TurmaFormPage"));
-const TurmaDetailPage = lazy(() => import("../pages/TurmaDetailPage"));
-const TurmaMateriaFormPage = lazy(() => import("../pages/TurmaMateriaFormPage"));
-const TurmaMateriaDetailPage = lazy(() => import("../pages/TurmaMateriaDetailPage"));
-const AvaliacaoFormPage = lazy(() => import("../pages/AvaliacaoFormPage"));
-const AvaliacaoDetailPage = lazy(() => import("../pages/AvaliacaoDetailPage"));
-
-
+const AlunoFormPage = lazy(() => import("../pages/aluno/AlunoFormPage"));
+const AlunoDetailPage = lazy(() => import("../pages/aluno/AlunoDetailPage"));
+const ProfessorFormPage = lazy(
+  () => import("../pages/professor/ProfessorFormPage")
+);
+const ProfessorDetailPage = lazy(
+  () => import("../pages/professor/ProfessorDetailPage")
+);
+const MateriaFormPage = lazy(() => import("../pages/materia/MateriaFormPage"));
+const MateriaDetailPage = lazy(
+  () => import("../pages/materia/MateriaDetailPage")
+);
+const TurmaFormPage = lazy(() => import("../pages/turma/TurmaFormPage"));
+const TurmaDetailPage = lazy(() => import("../pages/turma/TurmaDetailPage"));
+const TurmaMateriaFormPage = lazy(
+  () => import("../pages/turmaMateria/TurmaMateriaFormPage")
+);
+const TurmaMateriaDetailPage = lazy(
+  () => import("../pages/turmaMateria/TurmaMateriaDetailPage")
+);
+const AvaliacaoFormPage = lazy(
+  () => import("../pages/avaliacao/AvaliacaoFormPage")
+);
+const AvaliacaoDetailPage = lazy(
+  () => import("../pages/avaliacao/AvaliacaoDetailPage")
+);
 
 function PrivateRoute({ children }: { children: JSX.Element }) {
   const { isAuthenticated } = useAuth();
@@ -146,7 +158,7 @@ export function AppRoutes() {
             </PrivateRoute>
           }
         />
-                <Route
+        <Route
           path="/turmas&materias/new"
           element={
             <PrivateRoute>
