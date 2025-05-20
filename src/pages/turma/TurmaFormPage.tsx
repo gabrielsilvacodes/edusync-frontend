@@ -7,12 +7,18 @@ import api from "../../services/api";
 import type { TurmaFormData } from "../../types/types";
 
 // Schema de validação com Yup
-const schema = yup.object().shape({
+const schema = yup.object({
   nome: yup.string().required("Nome obrigatório"),
   descricao: yup.string().required("Descrição obrigatória"),
   alunos: yup
     .array()
-    .of(yup.number())
+    .of(
+      yup
+        .number()
+        .typeError("ID do aluno deve ser um número")
+        .required("ID do aluno obrigatório")
+    )
+    .min(1, "Selecione pelo menos um aluno")
     .required("Selecione pelo menos um aluno"),
 });
 

@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
@@ -159,7 +160,7 @@ export function AppRoutes() {
           }
         />
         <Route
-          path="/turmas&materias/new"
+          path="/turmas-materias/new"
           element={
             <PrivateRoute>
               <TurmaMateriaFormPage />
@@ -167,7 +168,7 @@ export function AppRoutes() {
           }
         />
         <Route
-          path="/turmas&materias/:id"
+          path="/turmas-materias/:id"
           element={
             <PrivateRoute>
               <TurmaMateriaDetailPage />
@@ -175,7 +176,7 @@ export function AppRoutes() {
           }
         />
         <Route
-          path="/turmas&materias/:id/edit"
+          path="/turmas-materias/:id/edit"
           element={
             <PrivateRoute>
               <TurmaMateriaFormPage />
