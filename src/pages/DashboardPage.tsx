@@ -3,9 +3,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import type { Aluno, Professor, Materia, Turma, Avaliacao, TurmaMateria } from "../types/types";
+import { useAuth } from "../context/AuthProvider";
 
 function DashboardPage() {
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   // Paginação separada para cada grid
   const [alunoPage, setAlunoPage] = useState(1);
@@ -50,6 +52,17 @@ function DashboardPage() {
   return (
     <div className="p-8 space-y-16">
       {/* Alunos */}
+            <div className="flex justify-end mb-8">
+        <button
+          onClick={() => {
+            logout();
+            navigate("/login");
+          }}
+          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+        >
+          Logout
+        </button>
+      </div>
       <section>
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-3xl font-bold">Alunos</h1>
