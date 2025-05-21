@@ -66,8 +66,8 @@ export type TurmaMateriaFormData = {
 export type Avaliacao = {
   id?: number;
   nota: number;
-  data_avaliacao: string; // formato YYYY-MM-DD
-  aluno_id: number;
+  data_avaliacao: string;
+  aluno: { id: number; nome: string }; 
   turma_materia: number;
 };
 

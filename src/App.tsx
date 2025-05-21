@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthProvider";
 import { AppRoutes } from "./routes/routes";
 
+
 // Cria a instância do QueryClient
 const queryClient = new QueryClient();
 

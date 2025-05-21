@@ -43,7 +43,7 @@ function AvaliacaoDetailPage() {
         <h1 className="text-3xl font-bold">Detalhes da Avaliação</h1>
         <h2 className="text-2xl font-semibold">Nota: {avaliacao.nota}</h2>
         <p className="text-gray-700">Data: {avaliacao.data_avaliacao}</p>
-        <p className="text-gray-700">Aluno ID: {avaliacao.aluno_id}</p>
+        <p className="text-gray-700">Aluno ID: {avaliacao.aluno.id}</p>
         <p className="text-gray-700">
           Turma/Matéria ID: {avaliacao.turma_materia}
         </p>
