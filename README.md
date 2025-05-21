@@ -1,54 +1,68 @@
-# React + TypeScript + Vite
+# EduSync Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+EduSync é uma aplicação web desenvolvida com React e TypeScript, voltada para a sincronização e gerenciamento de informações educacionais. Esta é a interface front-end do sistema, projetada para interagir com uma API backend (não incluída neste repositório).
 
-Currently, two official plugins are available:
+## 🧰 Tecnologias Utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [React](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [React Hook Form](https://react-hook-form.com/)
+- [Yup](https://github.com/jquense/yup)
+- [React Router DOM](https://reactrouter.com/)
+- [React Query (TanStack)](https://tanstack.com/query/latest)
+- [Axios](https://axios-http.com/)
 
-## Expanding the ESLint configuration
+## 🚀 Funcionalidades
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Autenticação de usuários com contexto global (`AuthContext`)
+- Formulários com validação utilizando React Hook Form + Yup
+- Navegação entre páginas (Login, Dashboard, etc.)
+- Consumo de API utilizando Axios
+- Gerenciamento eficiente de estado assíncrono com React Query
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 📁 Estrutura de Pastas
+
+```
+src/
+├── context/          # Contextos globais como AuthProvider
+├── pages/            # Páginas principais da aplicação (Dashboard, Login)
+├── App.tsx           # Componente raiz com rotas
+├── main.tsx          # Ponto de entrada principal
+├── index.css         # Estilos globais com Tailwind
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📦 Instalação
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/edusync-frontend.git
+   cd edusync-frontend
+   ```
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+
+3. Rode o projeto em modo de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
+
+4. Para build de produção:
+   ```bash
+   npm run build
+   ```
+
+## ✅ Scripts
+
+- `npm run dev`: inicia o servidor de desenvolvimento
+- `npm run build`: compila o projeto
+- `npm run preview`: pré-visualiza a build
+- `npm run lint`: analisa o código com ESLint
+
+## 📄 Licença
+
+Este projeto está licenciado sob os termos da [MIT License](LICENSE).
