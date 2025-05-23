@@ -6,8 +6,8 @@ import * as yup from "yup";
 import api from "../../services/api";
 import type { ProfessorFormData } from "../../types/types";
 
-// Schema de validação com Yup
-const schema = yup.object().shape({
+// Schema de validação
+const schema = yup.object({
   nome: yup.string().required("Nome obrigatório"),
   email: yup.string().email("E-mail inválido").required("E-mail obrigatório"),
   formacao: yup.string().required("Formação obrigatória"),
@@ -26,7 +26,7 @@ function ProfessorFormPage() {
     resolver: yupResolver(schema),
   });
 
-  // Se houver ID, está em modo de edição, busca o professor para preencher o formulário
+  // Modo de edição: carrega dados
   useEffect(() => {
     if (id) {
       api.get(`/api/v1/professores/${id}/`).then((res) => {
@@ -47,48 +47,95 @@ function ProfessorFormPage() {
       }
       navigate("/");
     } catch (error) {
-      alert(`Erro ao salvar professor: ${error}.`);
+      alert(`Erro ao salvar professor: ${error}`);
     }
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md"
-      >
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-          {id ? "Editar Professor" : "Novo Professor"}
-        </h1>
+    <div className="container my-5">
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-8 col-lg-6">
+          <div className="card shadow">
+            <div className="card-body p-4">
+              <h2 className="card-title text-center mb-4">
+                {id ? "Editar Professor" : "Novo Professor"}
+              </h2>
 
-        <input
-          {...register("nome")}
-          placeholder="Nome"
-          className="text-gray-500 w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <p className="text-red-500 text-sm mb-2">{errors.nome?.message}</p>
+              <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                <div className="mb-3">
+                  <label htmlFor="nome" className="form-label">
+                    Nome
+                  </label>
+                  <input
+                    id="nome"
+                    type="text"
+                    className={`form-control ${
+                      errors.nome ? "is-invalid" : ""
+                    }`}
+                    placeholder="Digite um nome"
+                    {...register("nome")}
+                    aria-invalid={!!errors.nome}
+                    aria-describedby="nome-error"
+                  />
+                  {errors.nome && (
+                    <div id="nome-error" className="invalid-feedback">
+                      {errors.nome.message}
+                    </div>
+                  )}
+                </div>
 
-        <input
-          {...register("email")}
-          placeholder="E-mail"
-          className="text-gray-500 w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <p className="text-red-500 text-sm mb-2">{errors.email?.message}</p>
+                <div className="mb-3">
+                  <label htmlFor="email" className="form-label">
+                    E-mail
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    className={`form-control ${
+                      errors.email ? "is-invalid" : ""
+                    }`}
+                    placeholder="Digite um email"
+                    {...register("email")}
+                    aria-invalid={!!errors.email}
+                    aria-describedby="email-error"
+                  />
+                  {errors.email && (
+                    <div id="email-error" className="invalid-feedback">
+                      {errors.email.message}
+                    </div>
+                  )}
+                </div>
 
-        <input
-          {...register("formacao")}
-          placeholder="Formação"
-          className="text-gray-500 w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <p className="text-red-500 text-sm mb-4">{errors.formacao?.message}</p>
+                <div className="mb-4">
+                  <label htmlFor="formacao" className="form-label">
+                    Formação
+                  </label>
+                  <input
+                    id="formacao"
+                    type="text"
+                    className={`form-control ${
+                      errors.formacao ? "is-invalid" : ""
+                    }`}
+                    placeholder="Digite uma formação"
+                    {...register("formacao")}
+                    aria-invalid={!!errors.formacao}
+                    aria-describedby="formacao-error"
+                  />
+                  {errors.formacao && (
+                    <div id="formacao-error" className="invalid-feedback">
+                      {errors.formacao.message}
+                    </div>
+                  )}
+                </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition duration-200"
-        >
-          {id ? "Atualizar Professor" : "Cadastrar Professor"}
-        </button>
-      </form>
+                <button type="submit" className="btn btn-primary w-100">
+                  {id ? "Atualizar Professor" : "Cadastrar Professor"}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
