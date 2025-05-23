@@ -77,7 +77,7 @@ function DashboardPage() {
             <h1 className="h3 fw-bold">Alunos</h1>
             <button
               onClick={() => navigate("/alunos/new")}
-              className="btn btn-success"
+              className="btn btn-primary"
             >
               Adicionar
             </button>
@@ -102,7 +102,7 @@ function DashboardPage() {
                         <p className="card-text mb-2"><small>Nascimento: {aluno.data_nascimento}</small></p>
                         <button
                           onClick={() => navigate(`/alunos/${aluno.id}`)}
-                          className="btn btn-primary mt-auto"
+                          className="btn btn-secondary mt-auto"
                         >
                           Detalhes
                         </button>
@@ -115,14 +115,14 @@ function DashboardPage() {
                 <button
                   onClick={() => setAlunoPage(alunoPage - 1)}
                   disabled={alunoPage === 1}
-                  className="btn btn-secondary me-2"
+                  className="btn btn-danger me-2"
                 >
                   Anterior
                 </button>
                 <button
                   onClick={() => setAlunoPage(alunoPage + 1)}
                   disabled={!alunos?.next}
-                  className="btn btn-secondary"
+                  className={`btn btn-success ${!materias?.next ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                   Próximo
                 </button>
@@ -142,7 +142,7 @@ function DashboardPage() {
             <h1 className="h3 fw-bold">Professores</h1>
             <button
               onClick={() => navigate("/professores/new")}
-              className="btn btn-success"
+              className="btn btn-primary"
             >
               Adicionar
             </button>
@@ -166,7 +166,7 @@ function DashboardPage() {
                         <p className="card-text mb-2"><small>Formação: {prof.formacao}</small></p>
                         <button
                           onClick={() => navigate(`/professores/${prof.id}`)}
-                          className="btn btn-primary mt-auto"
+                          className="btn btn-secondary mt-auto"
                         >
                           Detalhes
                         </button>
@@ -179,14 +179,14 @@ function DashboardPage() {
                 <button
                   onClick={() => setProfPage(profPage - 1)}
                   disabled={profPage === 1}
-                  className="btn btn-secondary me-2"
+                  className="btn btn-danger me-2"
                 >
                   Anterior
                 </button>
                 <button
                   onClick={() => setProfPage(profPage + 1)}
                   disabled={!professores?.next}
-                  className="btn btn-secondary"
+                  className={`btn btn-success ${!materias?.next ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                   Próximo
                 </button>
@@ -206,7 +206,7 @@ function DashboardPage() {
             <h1 className="h3 fw-bold">Matérias</h1>
             <button
               onClick={() => navigate("/materias/new")}
-              className="btn btn-success"
+              className="btn btn-primary"
             >
               Adicionar
             </button>
@@ -228,7 +228,7 @@ function DashboardPage() {
                         <h5 className="card-title">{mat.nome}</h5>
                         <button
                           onClick={() => navigate(`/materias/${mat.id}`)}
-                          className="btn btn-primary mt-auto"
+                          className="btn btn-secondary mt-auto"
                         >
                           Detalhes
                         </button>
@@ -241,14 +241,14 @@ function DashboardPage() {
                 <button
                   onClick={() => setMatPage(matPage - 1)}
                   disabled={matPage === 1}
-                  className="btn btn-secondary me-2"
+                  className="btn btn-danger me-2"
                 >
                   Anterior
                 </button>
                 <button
                   onClick={() => setMatPage(matPage + 1)}
                   disabled={!materias?.next}
-                  className="btn btn-secondary"
+                  className={`btn btn-success ${!materias?.next ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                   Próximo
                 </button>
@@ -268,7 +268,7 @@ function DashboardPage() {
             <h1 className="h3 fw-bold">Turmas</h1>
             <button
               onClick={() => navigate("/turmas/new")}
-              className="btn btn-success"
+              className="btn btn-primary"
             >
               Adicionar
             </button>
@@ -292,7 +292,7 @@ function DashboardPage() {
                         <p className="card-text mb-2"><small>Alunos: {turma.alunos?.length}</small></p>
                         <button
                           onClick={() => navigate(`/turmas/${turma.id}`)}
-                          className="btn btn-primary mt-auto"
+                          className="btn btn-secondary mt-auto"
                         >
                           Detalhes
                         </button>
@@ -305,14 +305,14 @@ function DashboardPage() {
                 <button
                   onClick={() => setTurmaPage(turmaPage - 1)}
                   disabled={turmaPage === 1}
-                  className="btn btn-secondary me-2"
+                  className="btn btn-danger me-2"
                 >
                   Anterior
                 </button>
                 <button
                   onClick={() => setTurmaPage(turmaPage + 1)}
                   disabled={!turmas?.next}
-                  className="btn btn-secondary"
+                  className={`btn btn-success ${!materias?.next ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                   Próximo
                 </button>
@@ -332,7 +332,7 @@ function DashboardPage() {
             <h1 className="h3 fw-bold">Turma-Matérias</h1>
             <button
               onClick={() => navigate("/turmas-materias/new")}
-              className="btn btn-success"
+              className="btn btn-primary"
             >
               Adicionar
             </button>
@@ -356,7 +356,7 @@ function DashboardPage() {
                         <p className="card-text mb-2"><small>Professor ID: {tm.professor}</small></p>
                         <button
                           onClick={() => navigate(`/turmas-materias/${tm.id}`)}
-                          className="btn btn-primary mt-auto"
+                          className="btn btn-secondary mt-auto"
                         >
                           Detalhes
                         </button>
@@ -369,14 +369,14 @@ function DashboardPage() {
                 <button
                   onClick={() => setTurmaMateriaPage(turmaMateriaPage - 1)}
                   disabled={turmaMateriaPage === 1}
-                  className="btn btn-secondary me-2"
+                  className="btn btn-danger me-2"
                 >
                   Anterior
                 </button>
                 <button
                   onClick={() => setTurmaMateriaPage(turmaMateriaPage + 1)}
                   disabled={!turmaMaterias?.next}
-                  className="btn btn-secondary"
+                  className={`btn btn-success ${!materias?.next ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                   Próximo
                 </button>
@@ -396,7 +396,7 @@ function DashboardPage() {
             <h1 className="h3 fw-bold">Avaliações</h1>
             <button
               onClick={() => navigate("/avaliacoes/new")}
-              className="btn btn-success"
+              className="btn btn-primary"
             >
               Adicionar
             </button>
@@ -421,7 +421,7 @@ function DashboardPage() {
                         <p className="card-text mb-2"><small>Turma/Matéria ID: {aval.turma_materia}</small></p>
                         <button
                           onClick={() => navigate(`/avaliacoes/${aval.id}`)}
-                          className="btn btn-primary mt-auto"
+                          className="btn btn-secondary mt-auto"
                         >
                           Detalhes
                         </button>
@@ -434,14 +434,14 @@ function DashboardPage() {
                 <button
                   onClick={() => setAvalPage(avalPage - 1)}
                   disabled={avalPage === 1}
-                  className="btn btn-secondary me-2"
+                  className="btn btn-danger me-2"
                 >
                   Anterior
                 </button>
                 <button
                   onClick={() => setAvalPage(avalPage + 1)}
                   disabled={!avaliacoes?.next}
-                  className="btn btn-secondary"
+                  className={`btn btn-success ${!materias?.next ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                   Próximo
                 </button>
