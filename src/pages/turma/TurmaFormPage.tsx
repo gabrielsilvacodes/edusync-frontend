@@ -6,7 +6,7 @@ import * as yup from "yup";
 import api from "../../services/api";
 import type { TurmaFormData } from "../../types/types";
 
-// Schema de validação com Yup
+// Validação com Yup
 const schema = yup.object({
   nome: yup.string().required("Nome obrigatório"),
   descricao: yup.string().required("Descrição obrigatória"),
@@ -35,6 +35,7 @@ function TurmaFormPage() {
     resolver: yupResolver(schema),
   });
 
+  // Pré-preenche o formulário se estiver editando
   useEffect(() => {
     if (id) {
       api.get(`/api/v1/turmas/${id}/`).then((res) => {
@@ -55,48 +56,101 @@ function TurmaFormPage() {
       }
       navigate("/");
     } catch (error) {
-      alert(`Erro ao salvar turma: ${error}.`);
+      alert(`Erro ao salvar turma: ${error}`);
     }
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md"
-      >
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-          {id ? "Editar Turma" : "Nova Turma"}
-        </h1>
+    <div className="container my-5">
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-8 col-lg-6">
+          <div className="card shadow">
+            <div className="card-body p-4">
+              <h2 className="text-center mb-4">
+                {id ? "Editar Turma" : "Nova Turma"}
+              </h2>
 
-        <input
-          {...register("nome")}
-          placeholder="Nome"
-          className="text-gray-500 w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <p className="text-red-500 text-sm mb-2">{errors.nome?.message}</p>
+              <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                {/* Campo Nome */}
+                <div className="mb-3">
+                  <label htmlFor="nome" className="form-label">
+                    Nome da Turma
+                  </label>
+                  <input
+                    id="nome"
+                    type="text"
+                    className={`form-control ${
+                      errors.nome ? "is-invalid" : ""
+                    }`}
+                    placeholder="Digite um nome"
+                    {...register("nome")}
+                    aria-invalid={!!errors.nome}
+                    aria-describedby="nome-erro"
+                  />
+                  {errors.nome && (
+                    <div id="nome-erro" className="invalid-feedback">
+                      {errors.nome.message}
+                    </div>
+                  )}
+                </div>
 
-        <input
-          {...register("descricao")}
-          placeholder="Descrição"
-          className="text-gray-500 w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <p className="text-red-500 text-sm mb-2">{errors.descricao?.message}</p>
+                {/* Campo Descrição */}
+                <div className="mb-3">
+                  <label htmlFor="descricao" className="form-label">
+                    Descrição
+                  </label>
+                  <textarea
+                    id="descricao"
+                    className={`form-control ${
+                      errors.descricao ? "is-invalid" : ""
+                    }`}
+                    placeholder="Digite uma descrição"
+                    {...register("descricao")}
+                    aria-invalid={!!errors.descricao}
+                    aria-describedby="descricao-erro"
+                  />
+                  {errors.descricao && (
+                    <div id="descricao-erro" className="invalid-feedback">
+                      {errors.descricao.message}
+                    </div>
+                  )}
+                </div>
 
-        <input
-          {...register("alunos")}
-          placeholder="IDs dos alunos separados por vírgula"
-          className="text-gray-500 w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <p className="text-red-500 text-sm mb-4">{errors.alunos?.message}</p>
+                {/* Campo Alunos */}
+                <div className="mb-3">
+                  <label htmlFor="alunos" className="form-label">
+                    IDs dos Alunos 
+                  </label>
+                  <input
+                    id="alunos"
+                    type="text"
+                    className={`form-control ${
+                      errors.alunos ? "is-invalid" : ""
+                    }`}
+                    placeholder="Ex: 1,2,3 (separados por virgula)"
+                    {...register("alunos")}
+                    aria-invalid={!!errors.alunos}
+                    aria-describedby="alunos-erro"
+                  />
+                  {errors.alunos && (
+                    <div id="alunos-erro" className="invalid-feedback">
+                      {errors.alunos.message}
+                    </div>
+                  )}
+                </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition duration-200"
-        >
-          {id ? "Atualizar Turma" : "Cadastrar Turma"}
-        </button>
-      </form>
+                {/* Botão de envio */}
+                <button
+                  type="submit"
+                  className="btn btn-primary w-100 fw-semibold"
+                >
+                  {id ? "Atualizar Turma" : "Cadastrar Turma"}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
