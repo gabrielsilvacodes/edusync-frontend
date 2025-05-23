@@ -3,11 +3,11 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
-import type { MateriaFormData } from "../../types/types";
 import api from "../../services/api";
+import type { MateriaFormData } from "../../types/types";
 
-// Schema de validação com Yup
-const schema = yup.object().shape({
+// Validação com Yup
+const schema = yup.object({
   nome: yup.string().required("Nome obrigatório"),
 });
 
@@ -24,15 +24,16 @@ function MateriaFormPage() {
     resolver: yupResolver(schema),
   });
 
+  // Edição: carrega dados da matéria
   useEffect(() => {
     if (id) {
       api.get(`/api/v1/materias/${id}/`).then((res) => {
-        const materia = res.data;
-        setValue("nome", materia.nome);
+        setValue("nome", res.data.nome);
       });
     }
   }, [id, setValue]);
 
+  // Envio do formulário
   const onSubmit = async (data: MateriaFormData) => {
     try {
       if (id) {
@@ -42,34 +43,51 @@ function MateriaFormPage() {
       }
       navigate("/");
     } catch (error) {
-      alert(`Erro ao salvar matéria: ${error}.`);
+      alert(`Erro ao salvar matéria: ${error}`);
     }
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md"
-      >
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-          {id ? "Editar Matéria" : "Nova Matéria"}
-        </h1>
+    <div className="container my-5">
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-8 col-lg-6">
+          <div className="card shadow-sm">
+            <div className="card-body p-4">
+              <h2 className="card-title text-center mb-4">
+                {id ? "Editar Matéria" : "Nova Matéria"}
+              </h2>
 
-        <input
-          {...register("nome")}
-          placeholder="Nome"
-          className="text-gray-500 w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <p className="text-red-500 text-sm mb-4">{errors.nome?.message}</p>
+              <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                <div className="mb-3">
+                  <label htmlFor="nome" className="form-label">
+                    Nome da Matéria
+                  </label>
+                  <input
+                    id="nome"
+                    type="text"
+                    className={`form-control ${
+                      errors.nome ? "is-invalid" : ""
+                    }`}
+                    placeholder="Digite uma matéria"
+                    {...register("nome")}
+                    aria-invalid={!!errors.nome}
+                    aria-describedby="nome-error"
+                  />
+                  {errors.nome && (
+                    <div id="nome-error" className="invalid-feedback">
+                      {errors.nome.message}
+                    </div>
+                  )}
+                </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition duration-200"
-        >
-          {id ? "Atualizar Matéria" : "Cadastrar Matéria"}
-        </button>
-      </form>
+                <button type="submit" className="btn btn-primary w-100">
+                  {id ? "Atualizar Matéria" : "Cadastrar Matéria"}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
