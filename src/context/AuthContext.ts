@@ -1,6 +1,6 @@
-// Tipagem do contexto de autenticação
-export type AuthContextType = {
-  isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>; 
-  logout: () => void;
-};
+import { createContext } from "react";
+import type { AuthContextType } from "./AuthContextType";
+
+export const AuthContext = createContext<AuthContextType>(
+  {} as AuthContextType
+);

@@ -2,9 +2,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../hooks/useAuth.ts";
 import type { LoginFormInputs } from "../types/types";
-
 
 // Validação com o yup para definir as regras dos campos.
 const schema = yup
@@ -15,8 +14,8 @@ const schema = yup
   .required();
 
 function LoginPage() {
-  // Acessa o contexto de autenticação 
-  const { login } = useAuth(); 
+  // Acessa o contexto de autenticação
+  const { login } = useAuth();
   // Hook para navegar entre as telas
   const navigate = useNavigate();
 
@@ -45,7 +44,7 @@ function LoginPage() {
         <div className="card shadow-lg border-0">
           <div className="card-body p-5">
             <h2 className="text-center mb-4 fw-bold">Acessar Conta</h2>
-            
+
             {/* Formulário com prevenção de validação nativa do browser */}
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
               <div className="mb-3">

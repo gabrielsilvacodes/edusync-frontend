@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
-import { AuthProvider, useAuth } from "./context/AuthProvider";
+import { AuthProvider } from "./context/AuthProvider";
+import { useAuth } from "./hooks/useAuth";
 import { AppRoutes } from "./routes/routes";
-
 
 // Cria a instância do QueryClient
 const queryClient = new QueryClient();

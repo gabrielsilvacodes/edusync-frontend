@@ -56,7 +56,7 @@ export type Turma = {
   id?: number;
   nome: string;
   descricao: string;
-  alunos: number[]; 
+  alunos: number[];
 };
 
 export type TurmaFormData = {
@@ -82,7 +82,7 @@ export type Avaliacao = {
   id?: number;
   nota: number;
   data_avaliacao: string;
-  aluno: { id: number; nome: string }; 
+  aluno: { id: number; nome: string };
   turma_materia: number;
 };
 
@@ -92,4 +92,3 @@ export type AvaliacaoFormData = {
   aluno_id: number;
   turma_materia: number;
 };
-

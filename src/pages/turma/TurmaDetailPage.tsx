@@ -27,14 +27,11 @@ function TurmaDetailPage() {
     }
   };
 
-  if (isLoading)
-    return <p className="text-center mt-5">Carregando turma...</p>;
+  if (isLoading) return <p className="text-center mt-5">Carregando turma...</p>;
 
   if (error)
     return (
-      <p className="text-center mt-5 text-danger">
-        Erro ao carregar a turma.
-      </p>
+      <p className="text-center mt-5 text-danger">Erro ao carregar a turma.</p>
     );
 
   return (
@@ -49,7 +46,7 @@ function TurmaDetailPage() {
           <p className="mb-4">
             <strong>Alunos:</strong>{" "}
             {turma.alunos && turma.alunos.length > 0
-              ? turma.alunos.map(aluno => aluno.nome).join(", ")
+              ? turma.alunos.map((aluno) => aluno.nome).join(", ")
               : "Nenhum aluno cadastrado"}
           </p>
           <div className="d-flex flex-column flex-md-row gap-2 justify-content-center mt-4">
