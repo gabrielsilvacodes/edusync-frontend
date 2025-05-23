@@ -28,44 +28,44 @@ function AvaliacaoDetailPage() {
   };
 
   if (isLoading)
-    return <p className="text-center mt-10">Carregando avaliação...</p>;
+    return <p className="text-center mt-5">Carregando avaliação...</p>;
 
   if (error)
     return (
-      <p className="text-center mt-10 text-red-500">
+      <p className="text-center mt-5 text-danger">
         Erro ao carregar a avaliação.
       </p>
     );
 
   return (
-    <div className="flex justify-center items-center min-h-screen p-4">
-      <div className="w-full max-w-3xl bg-white shadow-md rounded p-8 space-y-6 text-center">
-        <h1 className="text-3xl font-bold">Detalhes da Avaliação</h1>
-        <h2 className="text-2xl font-semibold">Nota: {avaliacao.nota}</h2>
-        <p className="text-gray-700">Data: {avaliacao.data_avaliacao}</p>
-        <p className="text-gray-700">Aluno ID: {avaliacao.aluno.id}</p>
-        <p className="text-gray-700">
-          Turma/Matéria ID: {avaliacao.turma_materia}
-        </p>
-        <div className="flex flex-col md:flex-row gap-4 justify-center mt-6">
-          <button
-            onClick={() => navigate(`/avaliacoes/${avaliacao.id}/edit/`)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full md:w-auto"
-          >
-            Editar Avaliação
-          </button>
-          <button
-            onClick={handleDelete}
-            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded w-full md:w-auto"
-          >
-            Excluir Avaliação
-          </button>
-          <button
-            onClick={() => navigate("/")}
-            className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded w-full md:w-auto"
-          >
-            Voltar
-          </button>
+    <div className="d-flex justify-content-center align-items-center min-vh-100 p-3">
+      <div className="card shadow w-100" style={{ maxWidth: 500 }}>
+        <div className="card-body text-center">
+          <h1 className="card-title h3 mb-3">Detalhes da Avaliação</h1>
+          <h2 className="h4 mb-2">Nota: {avaliacao.nota}</h2>
+          <p className="mb-1"><strong>Data:</strong> {avaliacao.data_avaliacao}</p>
+          <p className="mb-1"><strong>Aluno ID:</strong> {avaliacao.aluno?.id ?? avaliacao.aluno}</p>
+          <p className="mb-3"><strong>Turma/Matéria ID:</strong> {avaliacao.turma_materia}</p>
+          <div className="d-flex flex-column flex-md-row gap-2 justify-content-center mt-4">
+            <button
+              onClick={() => navigate(`/avaliacoes/${avaliacao.id}/edit/`)}
+              className="btn btn-primary w-100 w-md-auto"
+            >
+              Editar Avaliação
+            </button>
+            <button
+              onClick={handleDelete}
+              className="btn btn-danger w-100 w-md-auto"
+            >
+              Excluir Avaliação
+            </button>
+            <button
+              onClick={() => navigate("/")}
+              className="btn btn-secondary w-100 w-md-auto"
+            >
+              Voltar
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -14,6 +14,7 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
+//Trata erros 401 (Não autorizado) e tenta renovar o token de acesso
 api.interceptors.response.use(
     (response) => response,
     async (error) => {
@@ -24,14 +25,21 @@ api.interceptors.response.use(
             !originalRequest._retry &&
             !originalRequest.url.includes("/api/token/refresh/")
         ) {
-            originalRequest._retry = true;
+            originalRequest._retry = true; // Marca para evitar loop
 
             try {
+                // Tenta renovar o token usando o refresh token
                 const refresh = localStorage.getItem("refresh_token");
                 const { data } = await api.post("/api/token/refresh/", { refresh });
+                
+                // Atualiza tokens no armazenamento local
                 localStorage.setItem("access_token", data.access);
                 originalRequest.headers.Authorization = `Bearer ${data.access}`;
+                
+                // Repete a requisição original com novo token
                 return api(originalRequest);
+
+            // Redireciona para login se o refresh falhar
             } catch (refreshError) {
                 if (window.location.pathname !== "/login") {
                     window.location.href = "/login";

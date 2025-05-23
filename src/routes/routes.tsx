@@ -8,41 +8,25 @@ const LoginPage = lazy(() => import("../pages/LoginPage"));
 const DashboardPage = lazy(() => import("../pages/DashboardPage"));
 const AlunoFormPage = lazy(() => import("../pages/aluno/AlunoFormPage"));
 const AlunoDetailPage = lazy(() => import("../pages/aluno/AlunoDetailPage"));
-const ProfessorFormPage = lazy(
-  () => import("../pages/professor/ProfessorFormPage")
-);
-const ProfessorDetailPage = lazy(
-  () => import("../pages/professor/ProfessorDetailPage")
-);
+const ProfessorFormPage = lazy(() => import("../pages/professor/ProfessorFormPage"));
+const ProfessorDetailPage = lazy(() => import("../pages/professor/ProfessorDetailPage"));
 const MateriaFormPage = lazy(() => import("../pages/materia/MateriaFormPage"));
-const MateriaDetailPage = lazy(
-  () => import("../pages/materia/MateriaDetailPage")
-);
+const MateriaDetailPage = lazy(() => import("../pages/materia/MateriaDetailPage"));
 const TurmaFormPage = lazy(() => import("../pages/turma/TurmaFormPage"));
 const TurmaDetailPage = lazy(() => import("../pages/turma/TurmaDetailPage"));
-const TurmaMateriaFormPage = lazy(
-  () => import("../pages/turmaMateria/TurmaMateriaFormPage")
-);
-const TurmaMateriaDetailPage = lazy(
-  () => import("../pages/turmaMateria/TurmaMateriaDetailPage")
-);
-const AvaliacaoFormPage = lazy(
-  () => import("../pages/avaliacao/AvaliacaoFormPage")
-);
-const AvaliacaoDetailPage = lazy(
-  () => import("../pages/avaliacao/AvaliacaoDetailPage")
-);
-
-function PrivateRoute({ children }: { children: JSX.Element }) {
-  const { isAuthenticated } = useAuth();
+const TurmaMateriaFormPage = lazy(() => import("../pages/turmaMateria/TurmaMateriaFormPage"));
+const TurmaMateriaDetailPage = lazy(() => import("../pages/turmaMateria/TurmaMateriaDetailPage"));
+const AvaliacaoFormPage = lazy(() => import("../pages/avaliacao/AvaliacaoFormPage"));
+const AvaliacaoDetailPage = lazy(() => import("../pages/avaliacao/AvaliacaoDetailPage"));
+function PrivateRoute({ children }: { children: JSX.Element }) {const { isAuthenticated } = useAuth();
 
   if (isAuthenticated === null) {
-    // Ainda validando, bloqueia tudo!
+    // Validando a sessão
     return <div>Verificando sessão...</div>;
   }
 
   if (isAuthenticated === false) {
-    // Sessão inválida, redireciona sem renderizar nada
+    // Sessão inválida
     window.location.href = "/login";
     return null;
   }
@@ -50,6 +34,7 @@ function PrivateRoute({ children }: { children: JSX.Element }) {
   return children;
 }
 
+//Rotas das páginas
 export function AppRoutes() {
   return (
     <Suspense fallback={<p>Carregando...</p>}>

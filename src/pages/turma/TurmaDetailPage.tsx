@@ -28,46 +28,50 @@ function TurmaDetailPage() {
   };
 
   if (isLoading)
-    return <p className="text-center mt-10">Carregando turma...</p>;
+    return <p className="text-center mt-5">Carregando turma...</p>;
 
   if (error)
     return (
-      <p className="text-center mt-10 text-red-500">
+      <p className="text-center mt-5 text-danger">
         Erro ao carregar a turma.
       </p>
     );
 
   return (
-    <div className="flex justify-center items-center min-h-screen p-4">
-      <div className="w-full max-w-3xl bg-white shadow-md rounded p-8 space-y-6 text-center">
-        <h1 className="text-3xl font-bold">Detalhes da Turma</h1>
-        <h2 className="text-2xl font-semibold">{turma.nome}</h2>
-        <p className="text-gray-700">Descrição: {turma.descricao}</p>
-        <p className="text-gray-700">
-          Alunos:{" "}
-          {turma.alunos && turma.alunos.length > 0
-            ? turma.alunos.join(", ")
-            : "Nenhum aluno cadastrado"}
-        </p>
-        <div className="flex flex-col md:flex-row gap-4 justify-center mt-6">
-          <button
-            onClick={() => navigate(`/turmas/${turma.id}/edit/`)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full md:w-auto"
-          >
-            Editar Turma
-          </button>
-          <button
-            onClick={handleDelete}
-            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded w-full md:w-auto"
-          >
-            Excluir Turma
-          </button>
-          <button
-            onClick={() => navigate("/")}
-            className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded w-full md:w-auto"
-          >
-            Voltar
-          </button>
+    <div className="d-flex justify-content-center align-items-center min-vh-100 p-3">
+      <div className="card shadow w-100" style={{ maxWidth: 800 }}>
+        <div className="card-body text-center">
+          <h1 className="card-title h3 mb-4">Detalhes da Turma</h1>
+          <h2 className="h4 mb-3">{turma.nome}</h2>
+          <p className="mb-2">
+            <strong>Descrição:</strong> {turma.descricao}
+          </p>
+          <p className="mb-4">
+            <strong>Alunos:</strong>{" "}
+            {turma.alunos && turma.alunos.length > 0
+              ? turma.alunos.map(aluno => aluno.nome).join(", ")
+              : "Nenhum aluno cadastrado"}
+          </p>
+          <div className="d-flex flex-column flex-md-row gap-2 justify-content-center mt-4">
+            <button
+              onClick={() => navigate(`/turmas/${turma.id}/edit/`)}
+              className="btn btn-primary w-100 w-md-auto"
+            >
+              Editar Turma
+            </button>
+            <button
+              onClick={handleDelete}
+              className="btn btn-danger w-100 w-md-auto"
+            >
+              Excluir Turma
+            </button>
+            <button
+              onClick={() => navigate("/")}
+              className="btn btn-secondary w-100 w-md-auto"
+            >
+              Voltar
+            </button>
+          </div>
         </div>
       </div>
     </div>

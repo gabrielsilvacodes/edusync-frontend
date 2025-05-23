@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useAuth } from "../context/AuthProvider";
 import type { LoginFormInputs } from "../types/types";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
+
+// Validação com o yup para definir as regras dos campos.
 const schema = yup
   .object({
     username: yup.string().required("Usuário obrigatório"),
@@ -14,9 +15,12 @@ const schema = yup
   .required();
 
 function LoginPage() {
-  const { login } = useAuth();
+  // Acessa o contexto de autenticação 
+  const { login } = useAuth(); 
+  // Hook para navegar entre as telas
   const navigate = useNavigate();
 
+  // Configuração do fomulário com o yup
   const {
     register,
     handleSubmit,
@@ -25,10 +29,11 @@ function LoginPage() {
     resolver: yupResolver(schema),
   });
 
+  // função para submeter o fomulário
   const onSubmit = async (data: LoginFormInputs) => {
     try {
       await login(data.username, data.password);
-      navigate("/");
+      navigate("/"); // Redireciona para a tela inicial
     } catch (error) {
       alert("Erro ao fazer login. Verifique suas credenciais.");
     }
@@ -40,7 +45,8 @@ function LoginPage() {
         <div className="card shadow-lg border-0">
           <div className="card-body p-5">
             <h2 className="text-center mb-4 fw-bold">Acessar Conta</h2>
-
+            
+            {/* Formulário com prevenção de validação nativa do browser */}
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
               <div className="mb-3">
                 <label htmlFor="username" className="form-label">

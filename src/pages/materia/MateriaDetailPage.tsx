@@ -28,39 +28,41 @@ function MateriaDetailPage() {
   };
 
   if (isLoading)
-    return <p className="text-center mt-10">Carregando matéria...</p>;
+    return <p className="text-center mt-5">Carregando matéria...</p>;
 
   if (error)
     return (
-      <p className="text-center mt-10 text-red-500">
+      <p className="text-center mt-5 text-danger">
         Erro ao carregar a matéria.
       </p>
     );
 
   return (
-    <div className="flex justify-center items-center min-h-screen p-4">
-      <div className="w-full max-w-3xl bg-white shadow-md rounded p-8 space-y-6 text-center">
-        <h1 className="text-3xl font-bold">Detalhes da Matéria</h1>
-        <h2 className="text-2xl font-semibold">{materia.nome}</h2>
-        <div className="flex flex-col md:flex-row gap-4 justify-center mt-6">
-          <button
-            onClick={() => navigate(`/materias/${materia.id}/edit/`)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full md:w-auto"
-          >
-            Editar Matéria
-          </button>
-          <button
-            onClick={handleDelete}
-            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded w-full md:w-auto"
-          >
-            Excluir Matéria
-          </button>
-          <button
-            onClick={() => navigate("/")}
-            className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded w-full md:w-auto"
-          >
-            Voltar
-          </button>
+    <div className="d-flex justify-content-center align-items-center min-vh-100 p-3">
+      <div className="card shadow w-100" style={{ maxWidth: 500 }}>
+        <div className="card-body text-center">
+          <h1 className="card-title h3 mb-3">Detalhes da Matéria</h1>
+          <h2 className="h4 mb-4">{materia.nome}</h2>
+          <div className="d-flex flex-column flex-md-row gap-2 justify-content-center mt-4">
+            <button
+              onClick={() => navigate(`/materias/${materia.id}/edit/`)}
+              className="btn btn-primary w-100 w-md-auto"
+            >
+              Editar Matéria
+            </button>
+            <button
+              onClick={handleDelete}
+              className="btn btn-danger w-100 w-md-auto"
+            >
+              Excluir Matéria
+            </button>
+            <button
+              onClick={() => navigate("/")}
+              className="btn btn-secondary w-100 w-md-auto"
+            >
+              Voltar
+            </button>
+          </div>
         </div>
       </div>
     </div>

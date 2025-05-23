@@ -7,7 +7,7 @@ EduSync é uma aplicação web desenvolvida com React e TypeScript, voltada para
 - [React](https://reactjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Vite](https://vitejs.dev/)
-- [Tailwind CSS](https://tailwindcss.com/)
+- [Bootstrap](https://getbootstrap.com)
 - [React Hook Form](https://react-hook-form.com/)
 - [Yup](https://github.com/jquense/yup)
 - [React Router DOM](https://reactrouter.com/)

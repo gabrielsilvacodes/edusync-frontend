@@ -1,3 +1,18 @@
+// Tipo de resposta de paginação da API (usado com React Query)
+export type PaginatedResponse<T> = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
+};
+
+// Credenciais de autenticação para login de usuário
+export type LoginFormInputs = {
+  username: string;
+  password: string;
+};
+
+// Representação completa de um aluno no sistema
 export type Aluno = {
   id: number;
   nome: string;
@@ -6,7 +21,7 @@ export type Aluno = {
   data_nascimento: string;
 };
 
-// Tipo para o formulário de Produto
+// Dados necessários para criação/atualização de alunos
 export type AlunoFormData = {
   id?: number;
   nome: string;
@@ -41,7 +56,7 @@ export type Turma = {
   id?: number;
   nome: string;
   descricao: string;
-  alunos: number[]; // IDs dos alunos
+  alunos: number[]; 
 };
 
 export type TurmaFormData = {
@@ -76,18 +91,5 @@ export type AvaliacaoFormData = {
   data_avaliacao: string;
   aluno_id: number;
   turma_materia: number;
-};
-
-// Tipo de resposta de paginação da API (usado com React Query)
-export type PaginatedResponse<T> = {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: T[];
-};
-
-export type LoginFormInputs = {
-  username: string;
-  password: string;
 };
 
