@@ -6,7 +6,7 @@ import * as yup from "yup";
 import api from "../../services/api";
 import type { AlunoFormData } from "../../types/types";
 
-// 🎯 Validação com Yup
+// Validação com Yup
 const schema = yup.object({
   nome: yup.string().required("Nome obrigatório"),
   email: yup.string().email("E-mail inválido").required("E-mail obrigatório"),
@@ -30,7 +30,7 @@ function AlunoFormPage() {
     resolver: yupResolver(schema),
   });
 
-  // 🔄 Carrega os dados se estiver em modo de edição
+  // Carrega os dados se estiver em modo de edição
   useEffect(() => {
     if (id) {
       api.get(`/api/v1/alunos/${id}/`).then((res) => {
