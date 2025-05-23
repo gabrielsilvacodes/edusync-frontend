@@ -1,4 +1,4 @@
-# EduSync Frontend
+# 📚 EduSync - Sistema Escolar
 
 EduSync é uma aplicação web desenvolvida com React e TypeScript, voltada para a sincronização e gerenciamento de informações educacionais. Esta é a interface front-end do sistema, projetada para interagir com uma API backend (não incluída neste repositório).
 
