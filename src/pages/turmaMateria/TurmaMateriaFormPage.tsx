@@ -6,11 +6,20 @@ import * as yup from "yup";
 import api from "../../services/api";
 import type { TurmaMateriaFormData } from "../../types/types";
 
-// Schema de validação com Yup
-const schema = yup.object().shape({
-  turma: yup.number().required("Turma obrigatória"),
-  materia: yup.number().required("Matéria obrigatória"),
-  professor: yup.number().required("Professor obrigatório"),
+// Esquema de validação com Yup
+const schema = yup.object({
+  turma: yup
+    .number()
+    .typeError("Turma obrigatória")
+    .required("Turma obrigatória"),
+  materia: yup
+    .number()
+    .typeError("Matéria obrigatória")
+    .required("Matéria obrigatória"),
+  professor: yup
+    .number()
+    .typeError("Professor obrigatório")
+    .required("Professor obrigatório"),
 });
 
 function TurmaMateriaFormPage() {
@@ -46,51 +55,99 @@ function TurmaMateriaFormPage() {
       }
       navigate("/");
     } catch (error) {
-      alert(`Erro ao salvar Turma-Matéria: ${error}.`);
+      alert(`Erro ao salvar Turma-Matéria: ${error}`);
     }
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md"
-      >
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-          {id ? "Editar Turma-Matéria" : "Nova Turma-Matéria"}
-        </h1>
+    <div className="container my-5">
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-8 col-lg-6">
+          <div className="card shadow">
+            <div className="card-body p-4">
+              <h2 className="text-center mb-4">
+                {id ? "Editar Turma-Matéria" : "Nova Turma-Matéria"}
+              </h2>
 
-        <input
-          {...register("turma")}
-          type="number"
-          placeholder="ID da Turma"
-          className="text-gray-500 w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <p className="text-red-500 text-sm mb-2">{errors.turma?.message}</p>
+              <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                {/* Campo: Turma */}
+                <div className="mb-3">
+                  <label htmlFor="turma" className="form-label">
+                    ID da Turma
+                  </label>
+                  <input
+                    id="turma"
+                    type="number"
+                    className={`form-control ${
+                      errors.turma ? "is-invalid" : ""
+                    }`}
+                    placeholder="Ex: 1"
+                    {...register("turma")}
+                    aria-describedby="turma-erro"
+                  />
+                  {errors.turma && (
+                    <div id="turma-erro" className="invalid-feedback">
+                      {errors.turma.message}
+                    </div>
+                  )}
+                </div>
 
-        <input
-          {...register("materia")}
-          type="number"
-          placeholder="ID da Matéria"
-          className="text-gray-500 w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <p className="text-red-500 text-sm mb-2">{errors.materia?.message}</p>
+                {/* Campo: Matéria */}
+                <div className="mb-3">
+                  <label htmlFor="materia" className="form-label">
+                    ID da Matéria
+                  </label>
+                  <input
+                    id="materia"
+                    type="number"
+                    className={`form-control ${
+                      errors.materia ? "is-invalid" : ""
+                    }`}
+                    placeholder="Ex: 2"
+                    {...register("materia")}
+                    aria-describedby="materia-erro"
+                  />
+                  {errors.materia && (
+                    <div id="materia-erro" className="invalid-feedback">
+                      {errors.materia.message}
+                    </div>
+                  )}
+                </div>
 
-        <input
-          {...register("professor")}
-          type="number"
-          placeholder="ID do Professor"
-          className="text-gray-500 w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <p className="text-red-500 text-sm mb-4">{errors.professor?.message}</p>
+                {/* Campo: Professor */}
+                <div className="mb-4">
+                  <label htmlFor="professor" className="form-label">
+                    ID do Professor
+                  </label>
+                  <input
+                    id="professor"
+                    type="number"
+                    className={`form-control ${
+                      errors.professor ? "is-invalid" : ""
+                    }`}
+                    placeholder="Ex: 3"
+                    {...register("professor")}
+                    aria-describedby="professor-erro"
+                  />
+                  {errors.professor && (
+                    <div id="professor-erro" className="invalid-feedback">
+                      {errors.professor.message}
+                    </div>
+                  )}
+                </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition duration-200"
-        >
-          {id ? "Atualizar Turma-Matéria" : "Cadastrar Turma-Matéria"}
-        </button>
-      </form>
+                {/* Botão de envio */}
+                <button
+                  type="submit"
+                  className="btn btn-primary w-100 fw-semibold"
+                >
+                  {id ? "Atualizar Turma-Matéria" : "Cadastrar Turma-Matéria"}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
