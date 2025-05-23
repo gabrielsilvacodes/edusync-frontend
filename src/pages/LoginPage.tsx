@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useAuth } from "../context/AuthProvider";
 import type { LoginFormInputs } from "../types/types";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-// Schema de validação com Yup
-const schema = yup.object().shape({
-  username: yup.string().required("Usuário obrigatório"),
-  password: yup.string().required("Senha obrigatória"),
-});
+const schema = yup
+  .object({
+    username: yup.string().required("Usuário obrigatório"),
+    password: yup.string().required("Senha obrigatória"),
+  })
+  .required();
 
 function LoginPage() {
   const { login } = useAuth();
@@ -18,7 +20,7 @@ function LoginPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginFormInputs>({
     resolver: yupResolver(schema),
   });
@@ -33,39 +35,68 @@ function LoginPage() {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="bg-white p-10 rounded-2xl shadow-2xl w-full max-w-md"
-      >
-        <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">
-          Acessar Conta
-        </h2>
-  
-        <input
-          {...register("username")}
-          placeholder="Usuário"
-          className="text-gray-500 w-full p-3 mb-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <p className="text-red-500 text-sm mb-4">{errors.username?.message}</p>
-  
-        <input
-          {...register("password")}
-          type="password"
-          placeholder="Senha"
-          className="text-gray-500 w-full p-3 mb-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <p className="text-red-500 text-sm mb-6">{errors.password?.message}</p>
-  
-        <button
-          type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition duration-200"
-        >
-          Entrar
-        </button>
-      </form>
+    <div className="container min-vh-100 d-flex align-items-center justify-content-center bg-light">
+      <div className="col-12 col-md-8 col-lg-5">
+        <div className="card shadow-lg border-0">
+          <div className="card-body p-5">
+            <h2 className="text-center mb-4 fw-bold">Acessar Conta</h2>
+
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+              <div className="mb-3">
+                <label htmlFor="username" className="form-label">
+                  Usuário
+                </label>
+                <input
+                  id="username"
+                  type="text"
+                  {...register("username")}
+                  className={`form-control ${
+                    errors.username ? "is-invalid" : ""
+                  }`}
+                  autoFocus
+                  aria-describedby="usernameHelp"
+                  placeholder="Digite seu usuário"
+                />
+                {errors.username && (
+                  <div className="invalid-feedback">
+                    {errors.username.message}
+                  </div>
+                )}
+              </div>
+
+              <div className="mb-4">
+                <label htmlFor="password" className="form-label">
+                  Senha
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  {...register("password")}
+                  className={`form-control ${
+                    errors.password ? "is-invalid" : ""
+                  }`}
+                  placeholder="Digite sua senha"
+                />
+                {errors.password && (
+                  <div className="invalid-feedback">
+                    {errors.password.message}
+                  </div>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                className="btn btn-primary w-100 fw-semibold"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Entrando..." : "Entrar"}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-  );  
+  );
 }
 
 export default LoginPage;
